@@ -2,16 +2,24 @@ import UIKit
 
 func solution(phone_book: [String]) -> Bool {
     
-    var phone_book = phone_book
-    phone_book.sort()
-    for (i, phone1) in phone_book.enumerated() {
-        for (j, phone2) in phone_book.enumerated() {
-            if i < j {
-                if phone2.contains(phone1) { return false }
+    var set = Set<String>()
+    var result = true
+    
+    phone_book.forEach { element in
+        set.insert(element)
+    }
+    
+    phone_book.forEach { phone_number in
+        var temp = ""
+        phone_number.forEach { character in
+            temp.append(character)
+            if temp != phone_number, set.contains(temp) {
+                result = false 
             }
         }
     }
-    return true
+
+    return result
 }
 
 func test() {
