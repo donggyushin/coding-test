@@ -30,7 +30,7 @@ func solution(scoville: [Int], K: Int) -> Int {
     
     while isShouldUpdate(scoville: scoville, K: K) == true {
         
-        if scoville.count <= 2 {
+        if scoville.count <= 1 {
             result = -1
             break
         }
@@ -45,6 +45,7 @@ func solution(scoville: [Int], K: Int) -> Int {
 func test() {
     guard solution(scoville: [1, 2, 3, 9, 10, 12], K: 7) == 2 else { return print("test fail") }
     guard solution(scoville: [1, 2], K: 7) == -1 else { return print("test fail") }
+    guard solution(scoville: [5, 5], K: 7) == 1 else { return print("test fail") }
     print("test success")
 }
 
