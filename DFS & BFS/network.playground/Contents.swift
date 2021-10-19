@@ -1,36 +1,28 @@
 import Foundation
-
-func dfs(computers: [[Int]], checks: [Bool], i: Int) -> [Bool] {
-    var checks = checks
-    checks[i] = true
+class Network {
+    private var visited: [Bool]
+    private let computers: [[Int]]
+    var answer = 0
     
-    for j in 0..<computers.count {
-        if i != j, computers[i][j] == 1, checks[j] == false {
-            checks = dfs(computers: computers, checks: checks, i: j)
+    init(computers: [[Int]]) {
+        self.computers = computers
+        self.visited = Array(repeating: false, count: computers.count)
+        
+        for i in 0..<self.computers.count {
+            if !visited[i] {
+                dfs(index: i)
+                answer += 1
+            }
         }
+        
     }
-    
-    return checks
+
+    private func dfs(index: Int) {
+        visited[index] = true
+        computers.enumerated().forEach({if index != $0.offset, visited[$0.offset] == false, computers[index][$0.offset] == 1 { dfs(index: $0.offset)}})
+    }
 }
 
 func solution(_ n:Int, _ computers:[[Int]]) -> Int {
-        
-    var answer = 0
-    var checks = computers.map({ _ in false })
-    
-    for i in 0..<n {
-        if !checks[i] {
-            checks = dfs(computers: computers, checks: checks, i: i)
-            answer += 1
-            
-        }
-    }
-    return answer
+    return Network(computers: computers).answer
 }
-
-func test() {
-    print(solution(3, [[1, 1, 0], [1, 1, 0], [0, 0, 1]])==2)
-    print(solution(3, [[1, 1, 0], [1, 1, 1], [0, 1, 1]])==1)
-}
-
-test()
