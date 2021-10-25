@@ -1,6 +1,7 @@
 import Foundation
 
 func solution(_ n:Int, _ times:[Int]) -> Int64 {
+    
     return 0
 }
 
