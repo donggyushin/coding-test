@@ -1,8 +1,6 @@
 import Foundation
 
 func solution(_ n:Int, _ edge:[[Int]]) -> Int {
-    
-    let edge = edge.sorted(by: {$0[0] < $1[0]})
     var visited: [Bool] = Array(repeating: false, count: n)
     var queue: [Int] = [1]
     var answers: [Int] = []
@@ -12,9 +10,16 @@ func solution(_ n:Int, _ edge:[[Int]]) -> Int {
         answers = queue
         for _ in 0..<queue.count {
             let pop = queue.removeFirst()
-            for (item) in edge {
-                if item.contains(pop) {
-                    if let next = item.filter({ $0 != pop }).first, visited[next - 1] == false {
+            for item in edge {
+                if item[0] == pop {
+                    let next = item[1]
+                    if visited[next - 1] == false {
+                        visited[next - 1] = true
+                        queue.append(next)
+                    }
+                } else if item[1] == pop {
+                    let next = item[0]
+                    if visited[next - 1] == false {
                         visited[next - 1] = true
                         queue.append(next)
                     }
