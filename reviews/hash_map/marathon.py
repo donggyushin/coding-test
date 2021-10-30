@@ -1,8 +1,4 @@
-from typing import List
-
-
-def solution(participant: List[str], completion: List[str]):
-    answer = ''
+def solution(participant, completion):
     answer = ''
     temp = 0
     dic = {}
@@ -11,14 +7,6 @@ def solution(participant: List[str], completion: List[str]):
         temp += int(hash(part))
     for com in completion:
         temp -= hash(com)
-
     answer = dic[temp]
 
     return answer
-
-
-def test():
-    print(solution(["leo", "kiki", "eden"], ["eden", "kiki"]))
-
-
-test()
