@@ -1,13 +1,26 @@
 import Foundation
 
 func solution(_ N:Int, _ stages:[Int]) -> [Int] {
-    var stages = stages
-    var fail_percents: [Int: Float] = [:]
+    var stages = stages.sorted()
+    var fail_percentage: [Int: Double] = [:]
     for i in 1..<N+1 {
-        let total_count = stages.count
-        if stages.contains(i) {stages = stages.filter({ $0 != i })}
-        let diff = total_count - stages.count
-        fail_percents[i] = Float(diff) / Float(total_count)
+        let total = stages.count
+        var count = 0
+        while true {
+            if stages.isEmpty {
+                fail_percentage[i] = Double(count) / Double(total)
+                break
+            }
+            let pop = stages.removeFirst()
+            if pop == i {
+                count += 1
+            } else {
+                fail_percentage[i] = Double(count) / Double(total)
+                stages.insert(pop, at: 0)
+                break
+            }
+        }
     }
-    return fail_percents.sorted(by: { $0.key < $1.key }).sorted(by: { $0.value > $1.value }).map({ $0.key })
+    
+    return fail_percentage.sorted(by: { $0.key < $1.key }).sorted(by: { $0.value > $1.value }).map({ $0.key })
 }
